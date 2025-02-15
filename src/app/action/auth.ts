@@ -23,8 +23,8 @@ export async function login(formData: FormData) {
         username, 
         password,
         expiresInMins: 30 
-      }),
-      cache: 'no-store'
+      })
+     
     });
 
     if (!response.ok) {
@@ -34,14 +34,7 @@ export async function login(formData: FormData) {
 
     const data = await response.json();
     
-    // Store token in an HTTP-only cookie
-    cookies().set('authToken', data.accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 30 * 60, // 30 minutes
-      path: '/'
-    });
-
+  
     // Return user data (excluding sensitive info)
     return {
       success: true,
@@ -60,11 +53,6 @@ export async function login(formData: FormData) {
       error: error instanceof Error ? error.message : "An unexpected error occurred"
     };
   }
-}
-
-export async function logout() {
-  cookies().delete('authToken');
-  return { success: true };
 }
 
 export async function getUserData() {
