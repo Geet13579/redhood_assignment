@@ -48,7 +48,6 @@ export default function LoginForm() {
       } else if (result.success) {
         localStorage.setItem("userData", JSON.stringify(result.user));
         router.push("/dashboard");
-        router.refresh(); 
       }
     } catch (error) {
       setError("An error occurred during login");
